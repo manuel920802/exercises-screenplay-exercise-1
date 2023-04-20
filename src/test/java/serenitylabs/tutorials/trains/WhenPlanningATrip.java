@@ -91,12 +91,20 @@ public class WhenPlanningATrip {
         carrie.attemptsTo(
                 SelectFromOptions.byVisibleText("Mrs").from(TITLE.formField()),
                 Enter.theValue("Sarah-Jane").into(FIRST_NAME.formField()),
-                Enter.theValue("Smith").into(LAST_NAME.formField())
+                Enter.theValue("Smith").into(LAST_NAME.formField()),
+                Enter.theValue("qatest@email.com").into(EMAIL_ADDRESS.formField()),
+                Enter.theValue("qatest@email.com").into(CONFIRM_EMAIL.formField()),
+                Enter.theValue("123456789").into(PHONE_NUMBER.formField()),
+                SelectFromOptions.byValue("8am - 12pm").from(BEST_TIME_TO_CALL.formField())
         );
 
         carrie.should(seeThat(TheTarget.selectedValueOf(TITLE.formField()), equalTo("Mrs")),
                 seeThat(TheTarget.valueOf(FIRST_NAME.formField()), equalTo("Sarah-Jane")),
-                seeThat(TheTarget.valueOf(LAST_NAME.formField()),equalTo("Smith"))
-                );
+                seeThat(TheTarget.valueOf(LAST_NAME.formField()),equalTo("Smith")),
+                seeThat(TheTarget.textOf(EMAIL_ADDRESS.formField()),equalTo("qatest@email.com")),
+                seeThat(TheTarget.textOf(CONFIRM_EMAIL.formField()),equalTo("qatest@email.com")),
+                seeThat(TheTarget.valueOf(PHONE_NUMBER.formField()),equalTo("123456789")),
+                seeThat(TheTarget.valueOf(BEST_TIME_TO_CALL.formField()),equalTo("8am - 12pm"))
+        );
     }
 }
