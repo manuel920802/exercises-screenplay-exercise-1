@@ -96,6 +96,12 @@
             <version>3.3.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-ensure</artifactId>
+            <version>3.6.21</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

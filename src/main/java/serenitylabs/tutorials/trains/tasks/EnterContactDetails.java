@@ -37,13 +37,13 @@ public class EnterContactDetails implements Performable {
     @Step("{0} enters contact details for #title #firstName #lastName #emailAddress #confirmEmail #phoneNumber #bestTimeToCall")
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-        SelectFromOptions.byVisibleText(title).from(TITLE.formField()),
+                SelectFromOptions.byVisibleText(title).from(TITLE.formField()),
                 Enter.theValue(firstName).into(FIRST_NAME.formField()),
                 Enter.theValue(lastName).into(LAST_NAME.formField()),
                 Enter.theValue(emailAddress).into(EMAIL_ADDRESS.formField()),
                 Enter.theValue(confirmEmail).into(CONFIRM_EMAIL.formField()),
                 Enter.theValue(phoneNumber).into(PHONE_NUMBER.formField()),
                 SelectFromOptions.byValue(bestTimeToCall).from(BEST_TIME_TO_CALL.formField())
-                );
+        );
     }
 }

@@ -5,7 +5,8 @@ import org.openqa.selenium.By;
 
 public enum MenuBar {
     STATUS_UPDATES (By.linkText("Status updates")),
-    HELP_AND_CONTACTS(By.linkText("Help & contacts"));
+    HELP_AND_CONTACTS(By.linkText("Help & contacts")),
+    MAPS(By.linkText("Maps"));
 
     private final By byLocator;
 

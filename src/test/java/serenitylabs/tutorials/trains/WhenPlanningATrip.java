@@ -74,7 +74,7 @@ public class WhenPlanningATrip {
     }
 
     @Test
-    public void should_see_status_updates(){
+    public void should_be_able_to_see_status_updates(){
     carrie.attemptsTo(SelectMenu.option(STATUS_UPDATES));
 
     carrie.should(seeThat(TheServiceLines.displayed(), hasItems("Bakerloo", "Central", "Circle")));
@@ -107,5 +107,14 @@ public class WhenPlanningATrip {
                 seeThat(TheContactDetails.phoneNumber(),equalTo("123456789")),
                 seeThat(TheContactDetails.bestTimeToCall(),equalTo("8am - 12pm"))
         );
+    }
+
+    @Test
+    public void should_be_able_to_see_maps(){
+        carrie.attemptsTo(SelectMenu.option(MAPS),
+                Click.on(Maps.MapType.TUBES_AND_RAIL_MAPS)
+        );
+
+        carrie.should(seeThat(TheTarget.textOf(MapsPage.MAP_HEADING), equalTo("Tube and Rail")));
     }
 }
