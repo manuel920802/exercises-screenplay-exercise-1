@@ -1,15 +1,16 @@
 package serenitylabs.tutorials.trains;
 
-import net.serenitybdd.junit.runners.SerenityRunner;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.*;
 import net.serenitybdd.screenplay.questions.page.TheWebPage;
 import net.serenitybdd.screenplay.questions.targets.TheTarget;
+import net.serenitybdd.screenplay.ui.Button;
 import net.thucydides.core.annotations.Managed;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import serenitylabs.tutorials.trains.questions.SearchResults;
@@ -22,10 +23,9 @@ import serenitylabs.tutorials.trains.ui.*;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static org.hamcrest.Matchers.*;
-import static serenitylabs.tutorials.trains.ui.ContactForm.*;
 import static serenitylabs.tutorials.trains.ui.MenuBar.*;
 
-@RunWith(SerenityRunner.class)
+@ExtendWith(SerenityJUnit5Extension.class)
 public class WhenPlanningATrip {
 
     @Managed
@@ -38,7 +38,8 @@ public class WhenPlanningATrip {
         carrie.can(BrowseTheWeb.with(browser));
 
         carrie.attemptsTo(
-                Open.browserOn().the(TFLHomePage.class)
+                Open.browserOn().the(TFLHomePage.class),
+                Click.on(Button.withText("Accept all cookies"))
         );
     }
     @Test
@@ -85,7 +86,7 @@ public class WhenPlanningATrip {
 
         carrie.attemptsTo(
                 SelectMenu.option(HELP_AND_CONTACTS),
-                Click.on(HelpAndContacts.AboutOyster.CONTACT_US)
+                Click.on(HelpAndContactsPage.AboutOyster.CONTACT_US)
         );
 
         carrie.attemptsTo(
@@ -111,10 +112,47 @@ public class WhenPlanningATrip {
 
     @Test
     public void should_be_able_to_see_maps(){
+        carrie.attemptsTo(SelectMenu.option(MAPS));
+
+        carrie.should(seeThat(TheWebPage.title(), containsString("Maps")));
+    }
+
+    @Test
+    public void should_be_able_to_look_for_tube_services_on_selected_map(){
         carrie.attemptsTo(SelectMenu.option(MAPS),
-                Click.on(Maps.MapType.TUBES_AND_RAIL_MAPS)
+                Click.on(MapsPage.TUBE_AND_RAIL_MAPS)
+        );
+        carrie.should(seeThat(TheWebPage.title(), containsString("Tube and Rail")));
+
+        carrie.attemptsTo(SelectMenu.option(MAPS),
+                Click.on(MapsPage.TUBE_AND_RAIL_MAPS),
+                Click.on(MapsPage.OVERGROUND)
+        );
+        carrie.should(seeThat(TheWebPage.title(), containsString("Overground")));
+    }
+
+    @Test
+    public void should_be_able_to_download_tfl_app(){
+        carrie.attemptsTo(SelectMenu.option(MAPS),
+                Click.on(MapsPage.TFL_GO_APP),
+                Click.on(MapsPage.DOWNLOAD_THE_APP),
+                Click.on(MapsPage.GOOGLE_PLAY_LINK)
         );
 
-        carrie.should(seeThat(TheTarget.textOf(MapsPage.MAP_HEADING), equalTo("Tube and Rail")));
+        carrie.should(seeThat(TheWebPage.title(), containsString("TfL Go: Live Tube, Bus & Rail")));
+    }
+
+    @Test
+    public void should_be_able_to_see_fares(){
+        carrie.attemptsTo(SelectMenu.option(FARES));
+
+        carrie.should(seeThat(TheWebPage.title(), containsString("Fares")));
+    }
+
+    @Test
+    public void should_be_able_to_see_contactless_pay_info(){
+        carrie.attemptsTo(SelectMenu.option(FARES),
+                Click.on(FaresPage.contactLessPay.CONTACTLESS_AND_MOBILE_PAY)
+        );
     }
 }
