@@ -152,7 +152,26 @@ public class WhenPlanningATrip {
     @Test
     public void should_be_able_to_see_contactless_pay_info(){
         carrie.attemptsTo(SelectMenu.option(FARES),
-                Click.on(FaresPage.contactLessPay.CONTACTLESS_AND_MOBILE_PAY)
+                Click.on(FaresPage.CONTACTLESS_AND_MOBILE_PAY)
         );
+    }
+
+    @Test
+    public void should_be_able_to_plan_a_journey(){
+        carrie.attemptsTo(SelectMenu.option(PLAN_A_JOURNEY),
+                Enter.theValue("Waterloo").into(TFLHomePage.FROM_INPUT_FIELD),
+                Enter.theValue("Jubilee").into(TFLHomePage.TO_INPUT_FIELD),
+                Click.on(TFLHomePage.CHANGE_DEPARTURE_TIME),
+                SelectFromOptions.byVisibleText("Tomorrow").from(TFLHomePage.DATE_PICKER),
+                SelectFromOptions.byVisibleText("23:00").from(TFLHomePage.TIME_PICKER),
+                Click.on(Button.withText("Plan my journey"))
+        );
+
+        carrie.should(seeThat(TheWebPage.title(),containsString("Journey Results")));
+    }
+
+    @Test
+    public void should_be_able_to_access_more_links_from_menu(){
+        carrie.attemptsTo(SelectMenu.option(MORE_MENU));
     }
 }

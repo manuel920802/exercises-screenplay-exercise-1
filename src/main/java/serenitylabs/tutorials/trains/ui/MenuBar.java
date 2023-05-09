@@ -7,7 +7,9 @@ public enum MenuBar {
     STATUS_UPDATES (By.linkText("Status updates")),
     HELP_AND_CONTACTS(By.linkText("Help & contacts")),
     MAPS(By.linkText("Maps")),
-    FARES(By.linkText("Fares"));
+    FARES(By.linkText("Fares")),
+    PLAN_A_JOURNEY(By.linkText("Plan a journey")),
+    MORE_MENU(By.id("more-tab"));
 
     private final By byLocator;
 
